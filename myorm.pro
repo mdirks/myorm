@@ -5,9 +5,14 @@
 #-------------------------------------------------
 
 QT       -= gui
+QT += sql xml widgets
 
 TARGET = myorm
 TEMPLATE = lib
+
+#TARGET = generator
+#TEMPLATE =app
+
 
 DEFINES += MYORM_LIBRARY
 
@@ -111,7 +116,8 @@ HEADERS += myorm.h\
     repository/urlproperty.h \
     transactions/transaction.h \
     transactions/transactionobject.h \
-    transactions/transactions.h
+    transactions/transactions.h \
+    utils/utils.h
 
 unix {
     target.path = /usr/lib

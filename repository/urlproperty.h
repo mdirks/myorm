@@ -2,7 +2,7 @@
 #define URLPROPERTY_H
 
 #include "repositorypropertyimpl.h"
-#include "orm/mapping/murl.h"
+#include "mapping/murl.h"
 
 template<class ObjectType> class UrlProperty : public RepositoryPropertyImpl
 {

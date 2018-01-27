@@ -19,11 +19,12 @@
 #define REPOSITORY_H
 
 #include <map>
-#include <ext/hash_map>
+//#include <ext/hash_map>
 #include <string>
 
 #include "repositoryentry.h"
-#include "../persistence/pobject.h"
+#include "persistence/pobject.h"
+//#include "utils/utils.h"
 
 /**
   *@author Marcus Dirks
@@ -40,7 +41,10 @@ struct equal_char {
 
 };
 
-typedef  hash_map<const char*, RepositoryEntry*, hash<const char*>,equal_char> entrymap;
+typedef  map<string, RepositoryEntry*> entrymap;
+//typedef  map<const char*, RepositoryEntry*> entrymap;
+//typedef  hash_map<const char*, RepositoryEntry*> entrymap;
+//typedef  hash_map<const char*, RepositoryEntry*, hash<const char*>,equal_char> entrymap;
 //typedef  hash_map<const char*, RepositoryEntry> entrymap;
 
 class Repository {

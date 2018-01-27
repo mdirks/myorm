@@ -25,17 +25,7 @@ MappingControler::MappingControler(){
 		} else {
             qDebug() << "MappingControler(): Database is closed()";
 		}	
-		/*
-		QString qs2("select * from versions");
-		QSqlQuery q2(qs2);
-		if(q2.isActive()){
-			while(q2.next()){
-				mapVersions[q2.value(0).toString()] = q2.value(1).toString();
-			}
-		} else {
-			qWarning("Critical ! : Failed to read Version information from database !");
-		}
-		*/
+
 
 		listRegisteredMappers = new list<AbstractMapper*>();
 		list_listener = new list<MappingEventListener*>();
@@ -56,12 +46,16 @@ MappingControler* MappingControler::getInstance()
 
 void MappingControler::registerPersistentClass(AbstractMapper *mapper)
 {
-    listRegisteredMappers->push_back(mapper);
-    if(Database::getInstance()->isOpen()){		
-	    registerPersistentClassWithDatabase(mapper);
-    } else {
-        qDebug() << QString("MappingControler::registerPersistentClass : database closed, failed for %1").arg(mapper->getClassName().c_str());
-    }
+    //if(listRegisteredMappers->find(mapper) != listRegisteredMappers->end()){
+        listRegisteredMappers->push_back(mapper);
+        if(Database::getInstance()->isOpen()){
+            registerPersistentClassWithDatabase(mapper);
+        } else {
+            qDebug() << QString("MappingControler::registerPersistentClass : database closed, failed for %1").arg(mapper->getClassName().c_str());
+        }
+    //} else {
+    //    qDebug() << "WARNING MappingControler: Attempt to reregister " << mapper->getClassName();
+    //}
 
 }
 

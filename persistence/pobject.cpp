@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "pobject.h"
-#include "services/utils/utils.h"
+#include "utils/utils.h"
 
 //static PersistenceClass* persObj=0;
 

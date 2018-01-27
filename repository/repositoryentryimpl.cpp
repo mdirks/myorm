@@ -10,7 +10,7 @@
 //
 //
 #include "repositoryentryimpl.h"
-#include "services/utils/utils.h"
+#include "utils/utils.h"
 #include "indirectrepositoryproperty.h"
 
 #include <QString>
@@ -38,7 +38,7 @@ RepositoryEntryImpl::~RepositoryEntryImpl()
  */
 void RepositoryEntryImpl::addProperty(RepositoryProperty *p)
 {
-    nameToFunc[(p->getName()).c_str()] = p;
+    nameToFunc[p->getName()] = p;
     allProperties->push_back(p);
     if(p->isText()){
 	mprop = p;
@@ -87,7 +87,7 @@ RepositoryProperty* RepositoryEntryImpl::getProperty(string name){
 		}
 			
 	} else {
-		propertymap::iterator it = nameToFunc.find(name.c_str());
+        propertymap::iterator it = nameToFunc.find(name);
 		if(it != nameToFunc.end()){
 			rp = it->second;
 		}  else {
@@ -147,7 +147,7 @@ void RepositoryEntryImpl::registerBase(string baseClassName)
 	if(baseProperties){
 		for(list<RepositoryProperty*>::iterator it = baseProperties->begin(); it != baseProperties->end(); it++){
 			allProperties_withBase->push_back( (*it) );
-			nameToFunc[((*it)->getName()).c_str()] = (*it); //add baseclass properies to map for retrieval
+            nameToFunc[(*it)->getName()] = (*it); //add baseclass properies to map for retrieval
 		}
 	} else {
         qDebug() << QString("Warning: BaseClass %1 has no property list").arg(baseClassName.c_str());

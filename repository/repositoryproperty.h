@@ -24,7 +24,7 @@
 #include <qdatetime.h>
 #include <QAction>
 #include "../persistence/pobject.h"
-#include "orm/mapping/murl.h"
+#include "mapping/murl.h"
 //#include "propertyaction.h"
 
 using namespace std;

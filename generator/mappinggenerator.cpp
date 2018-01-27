@@ -151,8 +151,8 @@ void MappingGenerator::writeDeclaration_Factory(QTextStream &declStream)
 #ifndef "<< packageName << "OBJECTFACTORY_H \n \
 #define "<< packageName << "OBJECTFACTORY_H \n \
 \n \
-#include \"" << includeDir << "/orm/persistence/pobject.h\" \n \
-#include \"" << includeDir << "/orm/mapping/mappedobject.h\" \n\
+#include " << includeDir << "<persistence/pobject.h> \n \
+#include " << includeDir << "<mapping/mappedobject.h> \n\
 \n\n\
 class " << packageName << "ObjectFactory \n\
 {\n\
@@ -301,11 +301,11 @@ void MappingGenerator::writeDeclaration(QTextStream& declStream){
 #ifndef "<< className << "MAPPER_H \n \
 #define "<< className << "MAPPER_H \n \
 \n \
-#include \"" << "orm/persistence/pobject.h\" \n \
-#include \"" << "orm/mapping/mappedobject.h\" \n\
-#include \"" << "orm/mapping/association.h\" \n\
-#include \"" << "orm/mapping/murl.h\" \n\
-#include \"" << "orm/persistence/persistenceclass.h\" \n \
+#include " << "<persistence/pobject.h> \n \
+#include " << "<mapping/mappedobject.h> \n\
+#include " << "<mapping/association.h> \n\
+#include " << "<mapping/murl.h> \n\
+#include " << "<persistence/persistenceclass.h> \n \
 #include \"" <<  className.toLower() << ".h\" \n";
 for(int i=0; i<ascNodeList.count();i++)
 {
@@ -325,18 +325,18 @@ for(int i=0; i<refNodeList.count();i++)
         declStream << "#include \""  << ref_class.toLower() << ".h\" \n";
 }
 
-declStream << "#include \""  << "orm/mapping/abstractmapper.h\"\n \
-#include \"" <<  "orm/persistence/variant.h\"\n \
-#include \"" << "orm/repository/repositoryentryimpl.h\"\n \
-#include \"" << "orm/repository/stringproperty.h\"\n \
-#include \"" << "orm/repository/integerproperty.h\"\n \
-#include \"" << "orm/repository/pobjectproperty.h\"\n \
-#include \"" << "orm/repository/collectionpropertyimpl.h\"\n \
-#include \"" << "orm/repository/numericproperty.h\"\n \
-#include \"" << "orm/repository/dateproperty.h\"\n \
-#include \"" << "orm/repository/booleanproperty.h\"\n \
-#include \"" << "orm/repository/datetimeproperty.h\"\n \
-#include \"" << "orm/repository/repositoryenabled.h\"\n ";
+declStream << "#include "  << "<mapping/abstractmapper.h>\n \
+#include " <<  "<persistence/variant.h>\n \
+#include " << "<repository/repositoryentryimpl.h>\n \
+#include " << "<repository/stringproperty.h>\n \
+#include " << "<repository/integerproperty.h>\n \
+#include " << "<repository/pobjectproperty.h>\n \
+#include " << "<repository/collectionpropertyimpl.h>\n \
+#include " << "<repository/numericproperty.h>\n \
+#include " << "<repository/dateproperty.h>\n \
+#include " << "<repository/booleanproperty.h>\n \
+#include " << "<repository/datetimeproperty.h>\n \
+#include " << "<repository/repositoryenabled.h>\n ";
 if(baseClassName != ""){
     declStream << "#include \"" << QString(baseClassName).toLower() << "mapper.h\"\n";
 }
@@ -505,11 +505,11 @@ void MappingGenerator::writeDefinition_Intro()
 //\n \
 //\n \
 #include \""<< pClassName.toLower() << ".h\"\n \
-#include \"" << "services/utils/utils.h\"\n \
+#include <utils/utils.h>\n \
 #include \"" << className.toLower() << ".h\"\n\
-#include \"" << "orm/persistence/database.h\"\n \
-#include \"" << "orm/repository/urlproperty.h\"\n \
-//#include \"" << "orm/mappingproperty.h\"\n\
+#include <persistence/database.h>\n \
+#include <repository/urlproperty.h>\n \
+#include <mapping/mappingcontroler.h>\n\
 \n \
 "<< pClassName <<"* "<< pClassName << "::instance=0;\n \
 \n \
@@ -561,6 +561,7 @@ void MappingGenerator::writeDefinition_Constructor()
 	        implStream << "mapAssociations[\"" << asc_name << "\"] = asc_" << asc_name << ";\n";
 		implStream << "registerAssociation( asc_" << asc_name << ");\n";
 
+
 	}
 	
 	for(int i=0; i<refNodeList.count();i++)
@@ -577,6 +578,10 @@ void MappingGenerator::writeDefinition_Constructor()
 		}
 		
 	}
+
+    implStream << "\n\nMappingControler::getInstance()->registerPersistentClass(this);\n";
+    implStream << "Repository::getInstance()->addRepositoryEntry(getRepositoryEntry());\n";
+
 	
 	implStream << "}\n\n\n" << pClassName << "::~" << pClassName << "(){}\n\n\n ";
 }

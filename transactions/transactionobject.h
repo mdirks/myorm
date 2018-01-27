@@ -12,7 +12,7 @@
 #ifndef TRANSACTIONOBJECT_H
 #define TRANSACTIONOBJECT_H
 
-#include "../orm/mapping/mappedobject.h"
+#include "../mapping/mappedobject.h"
 
 /**
 @author Marcus Dirks

@@ -28,8 +28,8 @@
 
 
 #include "qobject.h"
-#include "services/utils/utils.h"
-#include "orm/persistence/database.h"
+#include "utils/utils.h"
+#include "persistence/database.h"
 #include "pcollectionpersistence.h"
 
 #include <QStringList>
@@ -131,8 +131,9 @@ QSqlDatabase DatabaseImpl_Q::getConnection(){
 void DatabaseImpl_Q::checkForOldstyleDb()
 {
     QSqlQuery q("select * from idtoname where name LIKE 'PlatzCanvasItem'");
-    if(q.isActive() && q.isValid()) qDebug() << "Found old style DB -- correcting";
-    {
+    if(q.isActive() && q.isValid()) {
+        qDebug() << "Found old style DB -- correcting";
+
         QSqlQuery q1("update idtoname set name='PlatzGraphicsItem' where name LIKE 'PlatzCanvasItem'");
         if(!q1.isActive()) qDebug() << "WARNING: Failed to correct PlatzCanvasItem";
 
